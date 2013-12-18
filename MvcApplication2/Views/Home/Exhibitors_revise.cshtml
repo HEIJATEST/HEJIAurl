@@ -1,0 +1,102 @@
+﻿@{
+    var viewDataen = ViewBag.ed;
+    ViewBag.Title = "修改参展商介面";
+}
+
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $("#StartTime").datepicker({ dateFormat: "yy/mm/dd" });
+        });
+
+
+        $(function () {
+            $("#EndTime").datepicker({ dateFormat: "yy/mm/dd" });
+        });
+        find_data();
+
+        function find_data() {
+            var exhibition_data = '@viewDataen';
+            $.ajax({
+                url: "http://140.133.74.52:8888/API/web/get_exhibitors_detail.aspx" + "?exhibitors_name=" + exhibition_data,
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    var data = jQuery.parseJSON(data);
+                    for (i = 0; i < data.data.length; i++) {
+
+
+                        $("#ExhibitionName").append('<input type="text" value=' + data.data[i].exhibition_name + '>');
+                        $("#ExhibitionLocation").append('<input type="text" value=' + data.data[i].exhibition_location + '>');
+                        $("#StartTime").append('<input type="text" id="StartTime" value=' + data.data[i].exhibition_starttime + '>');
+                    }
+                },
+                error: function (data) { alert("error" + data.error) },
+            })
+     .fail(
+        function (xhr, textStatus, err) {
+            $('#Exhibition_data').html('Error: ' + err);
+        });
+
+        }
+
+    });
+  </script>
+
+<h2>修改参展商介面</h2>
+
+
+<table class="table_Add">
+    <tr>
+        <td>参展商名称</td> <td><Input type="text" id="ExhibitorsName" value="Dxracer"></td>      
+    </tr>
+
+    <tr>
+        <td>参展商地址</td> <td><Input type="text" id="ExhibitorsAddress"value="新疆维吾尔自治区伊犁哈萨克自治州伊宁市胜利街红星街17号" ></td>      
+    </tr>
+
+    <tr>
+        <td>参展商电话</td> <td><Input type="text" id="ExhibitorsPhone"value="98798797899" ></td>      
+    </tr>
+
+    <tr>
+        <td>负责人</td> <td><Input type="text" id="ExhibitorsOwner"value="李三寶" ></td>      
+    </tr>
+    <tr>
+        <td>博览会名称</td> <td>
+            <select id="ExhibitionType">
+            <option>第一届家装建材家具家电万人团购砍价会</option>
+              <option>中国和家网●乌鲁木齐站第三届家装建材家具家电万人团购砍价会</option>
+               <option >中国和家网●乌鲁木齐站第四届家装建材家具家电万人团购砍价会</option>
+                 <option >领袖联盟杯中国和家网￭乌鲁木齐站家装建材家具家电团购会红五月</option>
+                  <option >全友家居杯中国和家网●乌鲁木齐站 第五届家装建材家具家电团购会</option>
+            </select></td>
+    </tr>
+      <tr>
+        <td>上传参展商图片</td> <td><Input type="file" id="ExhibitorsPicture" value="选择图片"></td>
+    </tr>
+
+    <tr>
+      <td>简介：</td><td><textarea rows="10" cols="15" title="简介请勿写超过100字">如此如此这般这般如此如此这般这般如此如此这般这般</textarea></td> 
+    </tr>
+
+      <tr>
+       <td colspan=2>@Html.ActionLink("确认", "exhibitors", "Home")</td>
+    </tr>
+
+ </table>

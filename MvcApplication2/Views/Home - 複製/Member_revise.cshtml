@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "會員資料修改管理介面";
+}
+
+<h2>會員資料修改管理介面</h2>
+<table class="table_Add">
+    <tr>
+        <td>姓名</td> <td><Input type="text" id="Member_name" value="王曉明" ></td> 
+    </tr>
+
+      <tr>
+        <td>手機</td> <td><Input type="text" id="Member_Phonenumber" value="0922455764">
+        </td >
+    </tr>
+
+      <tr>
+        <td>QQ碼</td> <td><Input type="text" id="Member_QQ_Code" value="QQ碼"></td>
+    </tr>
+
+      <tr>
+        <td>電子郵件</td> <td><Input type="text" id="Member_email" value="電子郵件"></td>
+    </tr>
+    <tr>
+         <td colspan=2>@Html.ActionLink("修改", "Member", "Home")</td>
+    </tr>
+ </table>

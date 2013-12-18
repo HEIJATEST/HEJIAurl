@@ -1,0 +1,198 @@
+﻿@{
+    var viewDataen = ViewBag.ed;
+    ViewBag.Title = viewDataen;
+}
+
+<script type="text/javascript">
+    
+  
+    var API_URL = "http://140.133.74.52:8888/API/web/get_exhibition_detail.aspx";
+
+    $(document).ready(function () {
+        find_data();
+       find_map_picture();
+        find_exhibition_Grid();
+        find_product_Grid();
+    });
+
+    $(function () {
+        $("#tabs").tabs();
+        $("#tabs_a").tabs();
+    });
+
+    function find_data() {
+        var exhibition_data = '@viewDataen';
+      
+            $.ajax({
+                url: API_URL + "?exhibition_name=" + exhibition_data,            
+                type: 'GET',             
+                datatype: 'json',            
+                success: function (data) {
+                    var data = jQuery.parseJSON(data);
+                    for (i = 0; i < data.data.length; i++) {
+                        if (data.data[i].exhibition_picture == "null") {
+                            data.data[i].exhibition_picture = "default_picture.png"
+                        }
+                        $("#Exhibition_Detail").append("<tr>" + "<td rowspan='5'><img src='../Images/Exhibition_picture/" + data.data[i].exhibition_picture + "'/></td>" + "</tr>" +
+                                                    "<tr>" + "<td>" + "博览会名称" + "</td>" + "<td>" + data.data[i].exhibition_name + "</td>" + "</tr>" +
+                                                    "<tr>" + "<td>" + "博览会地点" + "</td>" + "<td>" + data.data[i].exhibition_location + "</td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "起始日期" + "</td>" + "<td>" + data.data[i].exhibition_starttime + "</td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "結束日期" + "</td>" + "<td>" + data.data[i].exhibition_endtime + "</td>" + "</tr>"+
+                                                      "<tr>" + "<td >" + "简介：" + "</td>" + "<td>" + "<textarea>" + data.data[i].exhibition_description + "</textarea>" + "</td>" + "</tr>");
+
+                    }
+                },
+                error: function (data) { alert("error" ) },
+            })
+     .fail(
+        function (xhr, textStatus, err) {
+            $('#Exhibition_data').html('Error: ' + err);
+        });
+       
+    }
+
+    function find_map_picture()
+    {
+        var exhibition_data = '@viewDataen';
+ 
+        $.ajax({
+            url: API_URL + "?exhibition_name=" + exhibition_data,
+            type: 'GET',
+            datatype: 'json',
+            success: function (data) {
+                var data = jQuery.parseJSON(data);
+                for (i = 0; i < data.data.length; i++) {
+
+                    $("#mpa_picture").append("<img src='../Images/Exhibition_picture/" + "map20120412.png" + "'/>");
+
+                }
+            },
+            error: function (data) { alert("error") },
+        })
+ .fail(
+    function (xhr, textStatus, err) {
+        $('#Exhibition_data').html('Error: ' + err);
+    });
+    }
+
+
+    function find_exhibition_Grid()
+    {
+        var exhibition_data = '@viewDataen';
+        jQuery("#grid_id_exhibitors").jqGrid({
+            datatype: "json",
+            height: 250,
+            colNames: ['参展商名称', '参展商地址', '参展商电话', '负责人'],
+            colModel: [
+       { name: 'exhibitor_name', label: '参展商名称', width: 200, align: 'center' },
+       { name: 'exhibitor_location', label: '参展商地址', width: 200, align: 'center' },
+       { name: 'exhibitor_phone', label: '参展商电话', width: 200, align: 'center' },
+       { name: 'exhibitor_owner', label: '负责人', width: 200, align: 'center' },
+            ],
+            multiselect: true,
+            caption: "参展商",
+            rownumbers: true,
+            pager: '#pager_exhibitors',
+            rowList: 10,
+            autowidth: true
+
+        });  // jqGrid
+
+        $.getJSON(API_URL + "?exhibition_name=" + exhibition_data,
+       function (data) {
+
+           for (var i = 0; i <= data.data.length; i++)
+               for (var j = 0; j <= data.data[i].exhibitors.length; j++)
+                   jQuery("#grid_id_exhibitors").jqGrid('addRowData', i + 1, data.data[i].exhibitors[j]);
+       })
+   .fail(
+       function (xhr, textStatus, err) {
+           $('#grid_id_exhibitors').html('Error: ' + err);
+       });
+    }
+
+    function find_product_Grid() {
+        var exhibition_data = '@viewDataen';
+        jQuery("#grid_id_product").jqGrid({
+             datatype: "json",
+             height: 250,
+             colNames: ['商品编号', '商品类别', '商品名称', '商品资讯', '商品价格'],
+             colModel: [
+        { name: 'product_ID', label: '商品编号', width: 200, align: 'center' },
+        { name: 'product_type', label: '商品类别', width: 200, align: 'center' },
+        { name: 'product_name', label: '商品名称', width: 200, align: 'center' },
+        { name: 'product_description', label: '商品资讯', width: 200, align: 'center' },
+        { name: 'product_price', label: '商品价格', width: 200, align: 'center' },
+
+             ],
+             multiselect: true,
+             caption: "商品资料管理",
+             rownumbers: true,
+             pager: '#pager_product',
+             rowList: 10,
+             autowidth: true
+
+         });  // jqGrid
+
+        $.getJSON("http://140.133.74.52:8888/API/web/product_list.aspx" + "?exhibition_name=" + exhibition_data,
+        function (data) {
+
+            for (var i = 0; i <= data.data.length; i++)   
+                    jQuery("#grid_id_product").jqGrid('addRowData', i + 1, data.data[i]);
+        })
+    .fail(
+        function (xhr, textStatus, err) {
+            $('#grid_id_exhibitors').html('Error: ' + err);
+        });
+     }
+
+   
+
+  </script>
+<a href=/Home/Exhibition_revise?exhibition_name=@viewDataen><input type="submit" value="修改"/></a>
+
+<div id="tabs_a">
+   <ul>
+    <li><a href="#tabs-1">博覽會</a></li>
+  </ul>
+    <div id="tabs_a-1">
+    <table class="table_Ad">                                      
+             <tbody id="Exhibition_Detail">
+             </tbody>
+   </table> 
+    </div>      
+</div>
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">博覽會地圖</a></li>
+    <li><a href="#tabs-2">參展商</a></li>
+    <li><a href="#tabs-3">商品</a></li>
+  </ul>
+
+  <div id="tabs-1">
+    <div id=mpa_picture >
+    </div>
+  </div>
+
+  <div id="tabs-2">
+    <table id="grid_id_exhibitors">
+
+   </table>
+      
+   <div id="pager_exhibitors">
+   </div>
+
+  </div>
+
+  <div id="tabs-3">
+     <table id="grid_id_product">
+
+   </table>
+      
+   <div id="pager_product">
+   </div>
+  </div>
+</div>
+

@@ -1,0 +1,166 @@
+﻿@{
+    var viewDataen = ViewBag.ed;
+    ViewBag.Title = "修改博览会介面";
+}
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#StartTime").datepicker({ dateFormat: "yy-mm-dd" });
+        });
+
+
+        $(function () {
+            $("#EndTime").datepicker({ dateFormat: "yy/mm/dd" });
+        });
+        find_data();
+    });
+   
+    
+    function find_data() {
+        var exhibition_data = '@viewDataen';
+          $.ajax({
+              url: "http://140.133.74.52:8888/API/web/get_exhibition_detail.aspx" + "?exhibition_name=" + exhibition_data,
+              type: 'GET',
+              datatype: 'json',
+              success: function (data) {
+                  var data = jQuery.parseJSON(data);
+                  $("#ExhibitionName").val(data.data[0].exhibition_name);
+                  $("#ExhibitionLocation").val(data.data[0].exhibition_location);
+                  $("#StartTime").val(data.data[0].exhibition_starttime);
+                  $("#EndTime").val(data.data[0].exhibition_endtime);
+                  $("#ExhibitionPiucture").val(data.data[0].exhibition_picture);
+                  $("#Exhibitionicon").val(data.data[0].exhibition_location);
+                  $("#ExhibitionMap").val(data.data[0].exhibition_map);
+                  $("#ExhibitionDescription").val("1");
+              },
+              error: function (data) { alert("error" + data.error) },
+          })
+   .fail(
+      function (xhr, textStatus, err) {
+          $('#Exhibition_data').html('Error: ' + err);
+      });
+
+    }
+
+
+    function Exhibition_revise() {
+
+        var ExhibitionName = $("#ExhibitionName").val();
+        var ExhibitionLocation = $("#ExhibitionLocation").val();
+        var StartTime = $("#StartTime").val();
+        var EndTime = $("#EndTime").val();
+        var ExhibitionPiucture = $("#ExhibitionPiucture").val();
+        var Exhibitionicon = $("#Exhibitionicon").val();
+        var ExhibitionMap = $("#ExhibitionMap").val();
+        var ExhibitionDescription = $("#ExhibitionDescription").val();
+
+        if (ExhibitionPiucture == null) {
+            ExhibitionPiucture = "null";
+
+        }
+        if (Exhibitionicon == null) {
+            Exhibitionicon = "null";
+
+        }
+        if (ExhibitionMap == null) {
+            ExhibitionMap = "null";
+
+        }
+
+
+
+
+        var data = {
+            'exhibition_name': ExhibitionName,
+            'exhibition_location': ExhibitionLocation,
+            'exhibition_starttime': StartTime,
+            'exhibition_endtime': EndTime,
+            'exhibition_picture': ExhibitionPiucture,
+            'exhibition_icon': Exhibitionicon,
+            'exhibition_map': ExhibitionMap,
+            'exhibition_description': ExhibitionDescription
+
+
+        };
+
+        var test = JSON.stringify(data);
+
+        $.ajax({
+            url: "http://140.133.74.52:8888/API/web/update_exhibition.aspx",
+            type: "POST",
+            dataType: 'json',
+            data: { 'data': test },
+            success: function (test) { console.log(test) },
+
+        });
+
+
+
+    }
+   
+  </script>
+
+<h2>修改博览会介面</h2>
+@using (Html.BeginForm("Exhibition", "Home", FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+{               
+<div id="Exhibition_Detail">
+<table class="table_Add">
+    <tr>
+        <td>博览会名称</td> <td ><Input type="text" id="ExhibitionName" ></td> 
+    </tr>
+
+      <tr>
+        <td>博览会地点</td> <td ><Input type="text" id="ExhibitionLocation" ></td>
+      
+    </tr>
+
+      <tr>
+        <td>起始日期</td> <td><Input type="text" id="StartTime" ></td>
+    </tr>
+
+      <tr>
+        <td>結束日期</td> <td><Input type="text" id="EndTime" ></td>
+    </tr>
+
+      <tr>
+        <td>上传博览会小图</td>  <td><Input type="file" id="ExhibitionsPiucture" value="选择图片" ></td>
+    </tr>
+
+      <tr>
+        <td>上传博览会图片</td>  <td><Input type="file" id="ExhibitionPiucture" value="选择图片" ></td>
+    </tr>
+
+      <tr>
+        <td>上传会展地图</td>  <td><Input type="file" id="ExhibitionMap" value="选择图片" ></td>
+    </tr>
+
+     <tr>
+        <td>參展商</td>  <td> <input type="text" name="Exhibitors" id="Exhibitors"  /> <input type="button" value="新增"  /></td>
+    </tr>
+      <tr>       
+        <td>简介：</td><td><textarea id="ExhibitionDescription" name="ExhibitionDescription"> </textarea></td>  
+    </tr>
+    <tr>
+         <td colspan=2><input type="submit" value="确认"  onclick="Exhibition_revise()"/></td>
+        
+    </tr>
+ </table>
+
+</div>
+}

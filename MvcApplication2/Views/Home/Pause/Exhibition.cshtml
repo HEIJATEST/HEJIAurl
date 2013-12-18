@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "博覽會管理介面";
+}
+<input type="text" name="Inquiry"><input type="button" value="查詢" />
+<script>
+    $(document).ready(function() {
+        jQuery("#grid_id").jqGrid({
+            datatype: "local",
+            height: 400,
+            colNames: ['Mice_name', 'Mice_place', 'Mice_date', 'Mice_price'],
+            colModel: [
+       { name: 'Mice_name', label: '博覽會名稱', width: 200, align: 'center', style: 'font-weight:bold'},
+       { name: 'Mice_place', label: '地點', width: 200, align: 'center' },
+       { name: 'Mice_date', label: '日期', width: 200, align: 'center', datefmt: "yyyy-mm-dd" },
+       { name: 'Mice_price', label: '票價', width: 200, align: 'center' }
+
+               
+            ],
+            multiselect: true,
+            caption: "博覽會資料管理",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+        
+            
+        });  // jqGrid
+ 
+        var mydata = [
+          {Mice_name:"XX博覽會", Mice_place:"新疆", Mice_date:"2013-10-02", Mice_price:"1000"}, 
+          {Mice_name:"oo博覽會", Mice_place:"台灣", Mice_date:"2013-10-03", Mice_price:"1000"}, 
+          {Mice_name:"qq博覽會", Mice_place:"大陸", Mice_date:"2013-10-04", Mice_price:"1000"}, 
+          { Mice_name: "ss博覽會", Mice_place: "澎湖", Mice_date: "2013-10-05", Mice_price: "1000" },
+          { Mice_name: "ss博覽會", Mice_place: "高雄", Mice_date: "2013-10-06", Mice_price: "1000" },
+          { Mice_name: "ss博覽會", Mice_place: "台北", Mice_date: "2013-10-07", Mice_price: "1000" },
+          { Mice_name: "ss博覽會", Mice_place: "台中", Mice_date: "2013-10-08", Mice_price: "1000" },
+           { Mice_name: "ss博覽會", Mice_place: "台南", Mice_date: "2013-10-09", Mice_price: "1000" },
+            { Mice_name: "ss博覽會", Mice_place: "台東", Mice_date: "2013-10-10", Mice_price: "1000" },
+          {Mice_name:"ee博覽會", Mice_place:"基隆", Mice_date:"2013-10-12", Mice_price:"1000"}
+        ];
+   
+        for(var i=0;i<=mydata.length;i++)
+            jQuery("#grid_id").jqGrid('addRowData',i+1,mydata[i]);
+    });  
+    </script>
+<h2>博覽會管理介面</h2>
+
+
+<div id="draggable">
+<table id="grid_id">
+  
+</table>
+<div id="pager">
+</div>
+</div>

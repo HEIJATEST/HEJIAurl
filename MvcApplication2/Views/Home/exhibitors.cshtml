@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "参展商管理介面";
+}
+
+
+<script type="text/javascript">
+    var API_URL = "http://140.133.74.52:8888/API/web/get_exhibitors.aspx";
+
+    $(document).ready(function () {
+        getAll();
+    });
+
+    function clearStatus() {
+        $('#Exhibitors_data').html('');
+    }
+
+    function find() {
+        clearStatus();
+        var exhibitors_data = $("#search_exhibitors").val();
+      
+        if (exhibitors_data != "") {
+            $.ajax({
+                url: API_URL + "?Keyword=" + exhibitors_data,
+                cache: false,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                data: exhibitors_data,
+                success: function (data) {
+                   
+                    var data = jQuery.parseJSON(data);
+                    for (i = 0; i < data.data.length; i++) {
+                        if (data.data[i].exhibition_picture == "null") {
+                            data.data[i].exhibition_picture = "default_picture.png"
+                        }
+                        $("#Exhibitors_data").append("<tr>" + "<td rowspan='5'>" + "<a href=/Home/Exhibitors_Detail?exhibitor_name='" + data.data[i].exhibitor_name + "'><img src='../Images/Exhibitors_picture/" + data.data[i].exhibition_picture + "'/></a>" + "</td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "参展商名称" + "</td>" + "<td>" + data.data[i].exhibitor_name + "</td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "参展商地址" + "</td>" + "<td>" + data.data[i].exhibitor_location + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "参展商电话" + "</td>" + "<td>" + data.data[i].exhibitor_phone + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "负责人" + "</td>" + "<td>" + data.data[i].exhibitor_owner + "</td>" + "</tr>" );
+
+                    }
+                }
+            })
+     .fail(
+        function (xhr, textStatus, err) {
+            $('#Exhibitors_data').html('Error: ' + err);
+        });
+        } else {
+            alert("請輸入該查詢名稱");
+            getAll()
+        }
+    }
+
+    function getAll() {
+       
+        //利用Get方式取得。
+        $.getJSON(API_URL,
+        function (data) {
+            
+            
+            for (i = 0; i < data.data.length; i++) {   
+                if (data.data[i].exhibitor_picture == "null") {
+                    data.data[i].exhibitor_picture = "default_picture.png"
+                }
+                $("#Exhibitors_data").append("<tr>" + "<td rowspan='5'>" + "<a href=/Home/Exhibitors_Detail?exhibitor_name=" + data.data[i].exhibitor_name + "><img src='../Images/Exhibitors_picture/" + data.data[i].exhibitor_picture + "'/></a>" + "</td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "参展商名称" + "</td>" + "<td>" + data.data[i].exhibitor_name + "</td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "参展商地址" + "</td>" + "<td>" + data.data[i].exhibitor_location + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "参展商电话" + "</td>" + "<td>" + data.data[i].exhibitor_phone + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "负责人" + "</td>" + "<td>" + data.data[i].exhibitor_owner + "</td>" + "</tr>"
+                                             );
+              
+            }
+        })
+    .fail(
+        function (xhr, textStatus, err) {
+            $('#Exhibitors_data').html('Error: ' + err);
+        });
+
+
+    }
+  </script>
+
+<div class="search_box"><input type="text"  id="search_exhibitors" name="Inquiry" placeholder="请输入参展商名称">
+                        <input type="button" value="查询" onclick="find();" /></div>
+<h2>参展商管理介面</h2>
+<div>
+   <table class="table_Ad">                                      
+             <tbody id="Exhibitors_data">
+             </tbody>
+   </table>        
+</div>
+

@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "修改博覽會介面";
+}
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(function () {
+        $("#Start_Date").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+
+    $(function () {
+        $("#End_Date").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+    $(function () {
+        var tooltips = $("[title]").tooltip();
+        insertAfter("form");
+    });
+  </script>
+
+<h2>修改博覽會介面</h2>
+
+
+<table class="table_Add">
+    <tr>
+        <td>博覽會名稱</td> <td><Input type="text" id="Exhibition_name" value="XX博覽會" ></td> 
+    </tr>
+
+      <tr>
+        <td>地點</td> <td><Input type="text" id="E_place" value="新疆">
+        </td >
+    </tr>
+
+      <tr>
+        <td>起始日期</td> <td><Input type="text" id="Start_Date" value="2013-10-02"></td>
+    </tr>
+
+      <tr>
+        <td>結束日期</td> <td><Input type="text" id="End_Date"value="2013-11-02" ></td>
+    </tr>
+
+      <tr>
+        <td>票價</td> <td><Input type="text" id="price" value="1000"></td>
+    </tr>
+
+      <tr>
+        <td>上傳圖片</td>  <td><Input type="file" id="Exhibition_Add_image" value="選擇圖片" ></td>
+    </tr>
+
+      <tr>       
+        <td>簡介：</td><td><textarea rows="10" cols="15" title="簡介請勿寫超過300字">如此如此 這般這般如此如此 這般這般如此如此 這般這般</textarea> </td>  
+    </tr>
+    <tr>
+         <td colspan=2>@Html.ActionLink("確認", "Exhibition", "Home")</td>
+        
+    </tr>
+ </table>

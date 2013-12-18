@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "新增参展商介面";
+}
+
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    var API_URL = "http://140.133.74.52:8888/API/web/insert_exhibitors.aspx";
+
+  
+
+
+    function Exhibitors_add() {
+
+        var ExhibitorsName = $("#ExhibitorsName").val();
+        var ExhibitorsLocation = $("#ExhibitorsLocation").val();
+        var ExhibitorsPhone = $("#ExhibitorsPhone").val();
+        var ExhibitorsOwner = $("#ExhibitorsOwner").val();
+        var ExhibitionPiucture = $("#ExhibitorsPicture").val();
+        var ExhibitorsDescription = $("#ExhibitorsDescription").val();
+        //var ExhibitionName = $("#ExhibitionType").val();
+
+      
+
+        var data =
+                 {
+                     'exhibitor_name': ExhibitorsName,
+                     'exhibitor_location': ExhibitorsLocation,
+                     'exhibitor_phone': ExhibitorsPhone,
+                     'exhibitor_owner': ExhibitorsOwner,
+                     //'exhibitor_picture': '20138271541114747.jpg',
+                     //'exhibitor_description': ExhibitorsDescription,
+                     //'exhibition_name': ExhibitionName
+                 }
+        ;
+        console.log(data);
+        var test = JSON.stringify(data);
+        $.ajax({
+            url: API_URL,
+            type: "POST",
+            dataType: 'json',
+            data: { 'data': test },
+            success: function (test) { console.log(test) },
+
+        });
+
+
+
+    }
+  </script>
+
+<h2>新增参展商介面</h2>
+@using (Html.BeginForm("Exhibitors_Add", "Home", FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+{ 
+<table class="table_Add">
+    <tr>
+        <td>参展商名称</td> <td><Input type="text" id="ExhibitorsName" ></td>      
+    </tr>
+
+    <tr>
+        <td>参展商地址</td> <td><Input type="text" id="ExhibitorsLocation" ></td>      
+    </tr>
+
+    <tr>
+        <td>参展商电话</td> <td><Input type="text" id="ExhibitorsPhone" ></td>      
+    </tr>
+
+    <tr>
+        <td>负责人</td> <td><Input type="text" id="ExhibitorsOwner" ></td>      
+    </tr>
+      <tr>
+        <td>上传参展商图片</td> <td><Input type="file" id="ExhibitorsPicture" value="选择图片"></td>
+    </tr>
+
+    <tr>
+      <td>简介：</td><td><textarea id="ExhibitorsDescription" rows="10" cols="15" title="简介请勿写超过100字"></textarea></td> 
+    </tr>
+
+      <tr>
+       <td colspan="2"><input type="submit" value="确认"  onclick="Exhibitors_add()"/></td>
+    </tr>
+     <tr>
+        <td><input type="text" id="test_p" name="test_p" hidden="hidden"></td>
+ </table>
+
+}

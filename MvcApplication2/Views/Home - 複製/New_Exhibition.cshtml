@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "XX博覽會";
+}
+
+<script>
+    $(document).ready(function () {
+        jQuery("#grid_id").jqGrid({
+            datatype: "local",
+            height: 250,
+            colNames: ['Exhibitors_name'],
+            colModel: [
+       { name: 'Exhibitors_name', label: '參展商名稱', width: 200, align: 'center' },
+
+
+            ],
+            multiselect: true,
+            caption: "參展商資料",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+
+        });  // jqGrid
+
+        var mydata = [
+            { Exhibitors_name: "Dxracer" },
+              { Exhibitors_name: "SLIM" },
+                { Exhibitors_name: "Alapa" },
+                  { Exhibitors_name: "BenQ" },
+                    { Exhibitors_name: "樹科大參展商" },
+                      { Exhibitors_name: "海科大參展商" },
+                        { Exhibitors_name: "OK參展商" },
+                          { Exhibitors_name: "統一參展商" },
+                            { Exhibitors_name: "義大參展商" },
+                              { Exhibitors_name: "名素參展商" },
+        ];
+
+        for (var i = 0; i <= mydata.length; i++)
+            jQuery("#grid_id").jqGrid('addRowData', i + 1, mydata[i]);
+    });
+    </script>
+
+<Button>@Html.ActionLink("修改", "Exhibition_revise", "Home")</Button>
+    <table class="table_Add">
+        <tr>
+            <td>博覽會名稱</td><td>地點</td><td>起始日期</td><td>結束日期</td><td>價格</td>
+        </tr>
+         <tr>
+            <td>XX博覽會</td><td>新疆</td><td>2013-10-02</td><td>2013-11-02</td><td>1000</td>
+        </tr>
+         <tr>
+            <td>會展圖示：</td><td><input type="image"src="~/Images/201382715493019600.jpg" ></td><td>簡介：</td><td colspan=2><textarea readonly rows="10" cols="15" title="簡介請勿寫超過300字"> 如此如此 這般這般如此如此 這般這般如此如此 這般這般</textarea></td>
+         </tr> 
+        </table>
+<table id="grid_id">
+  
+</table>
+<div id="pager">
+</div>
+

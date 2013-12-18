@@ -1,0 +1,112 @@
+﻿@{
+    
+    var account = ViewData["account"];
+    var name = ViewData["name"];
+    var sex = ViewData["sex"];
+    var qq = ViewData["qq"];
+    var birthday = ViewData["birthday"];
+    var phone = ViewData["phone"];
+    var password = ViewData["password"];
+    
+    
+    ViewBag.Title = "会员资料修改介面";
+}
+
+<script>
+    var API_URL = "http://140.133.74.52:8888/API/web/get_member.aspx"
+    $(function () {
+        $("#Member_birthday").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+
+    $(document).ready(function () {
+        get_data();
+        // get_memberdata()
+    });
+    function get_data() {
+        var account = "@account";
+        var name = "@name";
+        var sex = "@sex";
+        var qq = "@qq";
+        var birthday = "@birthday";
+        var phone = "@phone";
+        var password = "@password";
+        console.log(account + "+" + name + "+" + password + "+" + phone + "+" + qq + "+" + birthday + "+" + sex)
+        $("#MemberName").val(name);
+        $("#MemberAccount").val(account);
+        $("#MemberPassword").val(password);
+        $("#MemberPhone").val(phone);
+        $("#Member_QQ").val(qq);
+        $("#MemberBirthday").val(birthday);
+        $("#MemberSex").val(sex);
+    }
+  
+    function member_update() {
+        var API_URL = "http://140.133.74.52:8888/API/app/update_member.aspx"
+        var member_account = $("#MemberAccount").val();
+        var member_name = $("#MemberName").val();
+        var member_password = $("#MemberPassword").val();
+        var member_phone = $("#MemberPhone").val();
+        var member_qq = $("#Member_QQ").val();
+        var member_birthday = $("#MemberBirthday").val();
+        var member_sex = $("#MemberSex").val();
+
+        var data = {
+            'member_id': member_account,
+            'member_name': member_name,
+            //'member_password': member_password,
+            'member_phone': member_phone,
+            'member_qq': member_qq,
+            'member_birthday': member_birthday,
+            'member_sex': member_sex
+
+
+        };
+
+        var data = JSON.stringify(data);
+        // console.log(test)
+        $.ajax({
+            url: API_URL,
+            type: "POST",
+            dataType: 'json',
+            data: { 'data': data },
+            success: function (data) { console.log(data) },
+
+        });
+        //  $.post(API_URL, test, function (data) { console.log(data) },'json')
+
+
+    }
+  </script>
+
+<h2>会员资料修改介面</h2>
+<table class="table_Add">
+          <tr>
+        <td>会员名称</td> <td><Input type="text" id="MemberName" OnFocus="blur()" ></td>
+    </tr>
+    <tr>
+        <td>会员帐号</td> <td><Input type="text" id="MemberAccount"OnFocus="blur()" ></td> 
+    </tr>
+
+      <tr>
+        <td>会员密码</td> <td><Input type="text" id="MemberPassword">
+        </td >
+    </tr>
+      <tr>
+        <td>会员手机</td> <td><Input type="text" id="MemberPhone"></td>
+    </tr>
+    <tr>
+        <td>会员QQ码</td> <td><Input type="text" id="Member_QQ" ></td>
+    </tr>
+    <tr>
+        <td>出生年月日</td> <td><Input type="text" id="MemberBirthday" ></td>
+    </tr>
+    <tr>
+        <td>会员性别</td> <td><Input type="text" id="MemberSex"></td>
+    </tr>
+    <tr>
+         <td colspan=2><input type="submit" value="确认"  onclick="member_update()"/></td>
+    </tr>
+ </table>

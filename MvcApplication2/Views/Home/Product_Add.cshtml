@@ -1,0 +1,82 @@
+﻿`@{
+    ViewBag.Title = "新增商品资料介面";
+}
+
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(function () {
+        var tooltips = $("[title]").tooltip();
+        insertAfter("form");
+    });
+  </script>
+
+<h2>新增商品资料介面</h2>
+<table class="table_Add">
+    <tr>
+        <td>商品编号</td> <td><Input type="text" id="ProductID" ></td>       
+    </tr>
+      <tr>
+        <td>商品类别</td> <td>
+            <select id="ProductType">
+            <option>沙发</option>
+              <option>手扶椅</option>
+               <option >折叠椅</option>
+                 <option >电脑椅</option>
+                  <option >平板架</option>
+                   <option >萤幕支架</option>
+                     <option >莲蓬头</option>
+                   <option >面盆</option>
+                  <option >浴缸</option>
+                <option >电视</option>
+               <option >机上盒</option>
+              <option >固定式壁挂架</option>
+                 <option >选择其他</option>
+            </select></td>
+    </tr>
+
+    <tr>
+        <td>商品名称</td> <td><Input type="text" id="ProductName" ></td>       
+    </tr>
+
+     <tr>
+        <td>商品价格</td> <td><Input type="text" id="ProductPrice" ></td>       
+    </tr>
+
+      <tr>
+        <td>上传商品图片</td> <td><Input type="file" id="ProductPicture" value="选择图片" ></td>
+    </tr>
+    <tr>
+         <td>参展商名称</td> <td>
+            <select id="ExhibitorsType">
+            <option>Dxracer</option>
+              <option>SLIM</option>
+               <option >Alapa</option>
+                 <option >BenQ</option>
+                  <option >Dxracer</option>
+                 <option >选择其他</option>
+            </select></td>
+    </tr>
+    <tr>
+      <td>商品资讯：</td><td><textarea rows="10" cols="15"  title="简介请勿写超过100字"></textarea></td> 
+    </tr>
+
+      <tr>
+       <td colspan=2>@Html.ActionLink("确认", "New_Exhibitors", "Home")</td>
+    </tr>
+
+ </table>
+

@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "新增博览会介面";
+}
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(function () {
+        $("#exhibition_starttime").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+
+    $(function () {
+        $("#exhibition_endtime").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+    function Insert() {
+        var json = JSON.stringify({
+            exhibition_name: $("#exhibition_name").val(),
+            exhibition_location: $("#exhibition_location").val(),
+            exhibition_starttime: $("#exhibition_starttime").val(),
+            exhibition_endtime: $("#exhibition_endtime").val(),
+            exhibition_picture: $("#exhibition_picture").val(),
+            exhibition_icon: $("#exhibition_icon").val(),
+            exhibition_description: $("#exhibition_description").val(),
+        })
+        $.ajax({
+            url: " http://140.133.74.52:8888/API/web/Insert_exhibition.aspx",
+            type: "post",
+            contentType: "application/json;charset=utf-8",
+            async: true,
+            data: json,
+            dataType: 'json',
+            success: function (result) { true },
+            error: function (xhr) {
+                message: "insert exhibition fail";
+            }
+
+        });
+       }
+  </script>
+
+<h2>新增博览会介面</h2>
+
+
+<table class="table_Add">
+    <tr>
+        <td>博览会名称</td> <td><Input type="text" id="exhibition_name" ></td> 
+    </tr>
+
+      <tr>
+        <td>博览会地点</td> <td><Input type="text" id="exhibition_location" >
+        </td >
+    </tr>
+
+      <tr>
+        <td>起始日期</td> <td><Input type="text" id="exhibition_starttime" ></td>
+    </tr>
+
+      <tr>
+        <td>結束日期</td> <td><Input type="text" id="exhibition_endtime" ></td>
+    </tr>
+
+      <tr>
+        <td>上传博览会图片</td>  <td><Input type="file" id="exhibition_picture" value="选择图片" ></td>
+    </tr>
+
+    <tr>
+        <td>上传博览会小图</td>  <td><Input type="file" id="exhibition_icon" value="选择图片" ></td>
+    </tr>
+
+      <tr>
+        <td>上传会展地图</td>  <td><Input type="file" id="ExhibitionMap" value="选择图片" ></td>
+    </tr>
+
+      <tr>       
+        <td>简介：</td><td><textarea id="exhibition_description" rows="10" cols="15" title="简介请勿写超过100字"> </textarea> </td>  
+    </tr>
+    <tr>
+         <td colspan=2><a href="@Url.Content("~/")Home/Exhibition" id="exhibitionCheck" data-role="button" >确认</a></td>
+         <td colspan=2> <input type="button" value="Test" onclick="Insert();" /></td>
+    </tr>
+ </table>

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "新增參展商介面";
+}
+
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(function () {
+        var tooltips = $("[title]").tooltip();
+        insertAfter("form");
+    });
+  </script>
+
+<h2>新增參展商介面</h2>
+
+<table class="table_Add">
+    <tr>
+        <td>參展商名稱</td> <td><Input type="text" id="Exhibitors_name" ></td>      
+    </tr>
+
+    <tr>
+        <td>參展商電話</td> <td><Input type="text" id="Exhibitors_phone" ></td>      
+    </tr>
+
+    <tr>
+        <td>參展商地址</td> <td><Input type="text" id="Exhibitors_address" ></td>      
+    </tr>
+
+    <tr>
+        <td>負責人</td> <td><Input type="text" id="Manager" ></td>      
+    </tr>
+
+      <tr>
+        <td>上傳圖片</td> <td><Input type="file" id="Exhibitors_image" value="選擇圖片"></td>
+    </tr>
+
+    <tr>
+      <td>簡介：</td><td><textarea rows="10" cols="15" title="簡介請勿寫超過300字"></textarea></td> 
+    </tr>
+
+      <tr>
+       <td colspan=2>@Html.ActionLink("確認", "exhibitors", "Home")</td>
+    </tr>
+
+ </table>
+

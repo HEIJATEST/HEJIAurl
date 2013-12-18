@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Dxracer";
+}
+
+
+<script>
+    $(document).ready(function () {
+        jQuery("#grid_id").jqGrid({
+            datatype: "local",
+            height: 250,
+            colNames: ['Product_name', 'Product_class'],
+            colModel: [
+       { name: 'Product_Information_name', label: '商品名稱', width: 200, align: 'center' },
+       { name: 'Product_Information_class', label: '商品類別', width: 200, align: 'center' },
+       
+
+            ],
+            multiselect: true,
+            caption: "商品資料",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+
+        });  // jqGrid
+
+        var mydata = [
+            { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" },
+              { Product_Information_name: "超好用的床", Product_Information_class: "家具類" }
+        ];
+
+        for (var i = 0; i <= mydata.length; i++)
+            jQuery("#grid_id").jqGrid('addRowData', i + 1, mydata[i]);
+    });
+    </script>
+
+<Button>@Html.ActionLink("修改", "Exhibitors_revise", "Home")</Button>
+    <table class="table_Add">
+        <tr>
+            <td>參展商名稱</td> <td>Dxracer</td><td>參展商電話</td><td>98798797899</td> <td>負責人</td> <td>李三寶</td>  
+        </tr>
+        <tr>
+            <td>參展商地址</td> <td colspan="4">新疆維吾爾自治區伊犁哈薩克自治州伊寧市勝利街紅星街17號</td>
+            </tr>
+        <tr>
+             <td>會展圖示：</td><td><input type="image"src="~/Images/201382714434592850.jpg" > <td>簡介：</td><td colspan="5"><textarea rows="10" cols="15" title="簡介請勿寫超過300字"> 如此如此 這般這般如此如此 這般這般如此如此 這般這般</textarea></td>
+         </tr> 
+        </table>
+   <Button> @Html.ActionLink("新增商品", "Product_Add", "Home") </Button>
+<table id="grid_id">
+  
+</table>
+<div id="pager">
+</div>
+
+

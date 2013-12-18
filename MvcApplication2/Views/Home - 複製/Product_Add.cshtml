@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "新增商品資料介面";
+}
+
+ <style>
+label {
+    display: inline-block; width: 300px;
+  }
+  fieldset div {
+    margin-bottom: 2em;
+  }
+  fieldset .help {
+    display: inline-block;
+  }
+  .ui-tooltip {
+    width: 300px;
+  }
+  </style>
+
+<script>
+    $(function () {
+        var tooltips = $("[title]").tooltip();
+        insertAfter("form");
+    });
+  </script>
+
+<h2>新增商品資料介面</h2>
+<table class="table_Add">
+    <tr>
+        <td>商品名稱</td> <td><Input type="text" id="Product_name" ></td>       
+    </tr>
+
+      <tr>
+        <td>商品類別</td> <td><Input type="text" id="Product_class" >
+        </td >
+    </tr>
+
+      <tr>
+        <td>廠商名稱</td> <td>
+            <select>
+             <option>XDC廠商</option>
+              <option>FDS廠商</option>
+               <option >XXX廠商</option>
+                </select></td>
+    </tr>
+
+      <tr>
+        <td>上傳圖片</td> <td><Input type="file" id="Product_Information_Add_image" value="選擇圖片" ></td>
+    </tr>
+
+    <tr>
+      <td>簡介：</td><td><textarea rows="10" cols="15"  title="簡介請勿寫超過300字"></textarea></td> 
+    </tr>
+
+      <tr>
+       <td colspan=2>@Html.ActionLink("確認", "Product_Information", "Home")</td>
+    </tr>
+
+ </table>
+

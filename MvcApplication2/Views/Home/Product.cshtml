@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "商品资料管理介面";
+}
+
+
+<script type="text/javascript">
+    var API_URL = "http://140.133.74.52:8888/API/web/get_product.aspx";
+
+    $(document).ready(function () {
+        getAll();
+    });
+
+    function clearStatus() {
+        $('#Product_data').html('');
+    }
+
+    function find() {
+        clearStatus();
+        var products_data = $("#search_product").val();
+
+        if (products_data != "") {
+            $.ajax({
+                url: API_URL + "?Keyword=" + products_data,
+                cache: false,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                data: products_data,
+                success: function (data) {
+                   
+                    var data = jQuery.parseJSON(data);
+                    for (i = 0; i < data.data.length; i++) {
+                        $("#Product_data").append("<tr>" + "<td rowspan='7'><img src='../Images/Exhibition_picture/" + "201382714434592850.jpg" + "'/></td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "商品编号" + "</td>" + "<td>" + data.data[i].product_id + "</td>" + "</tr>" +
+                                                     "<tr>" + "<td>" + "商品类别" + "</td>" + "<td>" + data.data[i].product_type + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "商品名称" + "</td>" + "<td>" + data.data[i].product_name + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "商品价格" + "</td>" + "<td>" + data.data[i].product_price + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "参展商名称" + "</td>" + "<td>" + data.data[i].exhibitors_name + "</td>" + "</tr>" +
+                                                      "<tr>" + "<td>" + "商品资讯" + "</td>" + "<td>" + "<textarea readonly >" + data.data[i].product_description + "</textarea>" + "</td>" + "</tr>");
+
+                    }
+                }
+            })
+     .fail(
+        function (xhr, textStatus, err) {
+            $('#Exhibitors_data').html('Error: ' + err);
+        });
+        } else {
+            alert("請輸入該查詢名稱");
+            getAll()
+        }
+    }
+
+    function getAll() {
+       
+        //利用Get方式取得。
+        $.getJSON(API_URL,
+        function (data) {
+            
+            
+            for (i = 0; i < data.data.length; i++) {
+                $("#Product_data").append("<tr>" + "<td rowspan='7'><img src='../Images/Exhibition_picture/" + "201382714434592850.jpg" + "'/></td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "商品编号" + "</td>" + "<td>" + data.data[i].product_id + "</td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "商品类别" + "</td>" + "<td>" + data.data[i].product_type + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "商品名称" + "</td>" + "<td>" + data.data[i].product_name + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "商品价格" + "</td>" + "<td>" + data.data[i].product_price + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "参展商名称" + "</td>" + "<td>" + data.data[i].exhibitors_name + "</td>" + "</tr>" +
+                                              "<tr>" + "<td>" + "商品资讯" + "</td>" + "<td>" + "<textarea readonly >" + data.data[i].product_description + "</textarea>" + "</td>" + "</tr>");
+              
+            }
+        })
+    .fail(
+        function (xhr, textStatus, err) {
+            $('#Product_data').html('Error: ' + err);
+        });
+
+
+    }
+  </script>
+
+
+<div class="search_box"><input type="text" name="Inquiry" placeholder="请输入商品名称" id="search_product">
+                        <input type="button" value="查询" onclick="find();" /></div>
+
+<h2>商品资料管理介面</h2>
+<div>
+   <table class="table_Ad">                                      
+             <tbody id="Product_data">
+             </tbody>
+   </table>        
+</div>

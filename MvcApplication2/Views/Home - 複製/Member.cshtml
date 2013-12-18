@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "會員資料管理介面";
+}
+
+<input type="text" name="Inquiry"><input type="button" value="查詢" />
+<div style="float:right;padding-right:60%">請輸入名稱或電話</div>
+<script>
+    $(document).ready(function() {
+        jQuery("#grid_id").jqGrid({
+            datatype: "local",
+            height: 250,
+            colNames: ['Member_name', 'Member_Phone', 'Member_QQ', 'Member_Email'],
+            colModel: [
+       { name: 'Member_name', label: '會員名稱', width: 200, align: 'center' },
+       { name: 'Member_Phone', label: '會員手機', width: 200, align: 'center' },
+        { name: 'Member_QQ', label: '會員QQ碼', width: 200, align: 'center' },
+         { name: 'Member_Email', label: '會員郵件', width: 200, align: 'center' }
+               
+            ],
+            multiselect: true,
+            caption: "商品資料管理",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+            
+        });  // jqGrid
+ 
+        var mydata = [
+            { Member_name: "王曉明", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+               { Member_name: "謝錦鴻", Member_Phone: "0922009767", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                 { Member_name: "陳嫌弄", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                   { Member_name: "將依法", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                     { Member_name: "無價準", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                       { Member_name: "陳映獎", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                         { Member_name: "潘整總", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                           { Member_name: "楊猛障", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                             { Member_name: "留字另", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" },
+                               { Member_name: "王燕聽", Member_Phone: "0922455764", Member_QQ: "QQ碼", Member_Email: "E-mail" }
+        ];
+   
+        for(var i=0;i<=mydata.length;i++)
+            jQuery("#grid_id").jqGrid('addRowData',i+1,mydata[i]);
+    });  
+    </script>
+<div id="draggable">
+<table id="grid_id">
+  
+</table>
+<div id="pager">
+</div>
+</div>

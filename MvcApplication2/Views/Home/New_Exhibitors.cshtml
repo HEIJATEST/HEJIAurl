@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Dxracer";
+}
+
+
+<script>
+    $(document).ready(function () {
+        jQuery("#grid_ProductID").jqGrid({
+            datatype: "local",
+            height: 250,
+            colNames: ['ProductID', 'ProductType', 'ProductName', 'ProductInformation', 'ProductPrice'],
+            colModel: [
+       { name: 'ProductID', label: '商品编号', width: 200, align: 'center' },
+       { name: 'ProductType', label: '商品类别', width: 200, align: 'center' },
+       { name: 'ProductName', label: '商品名称', width: 200, align: 'center' },
+       { name: 'ProductInformation', label: '商品资讯', width: 200, align: 'center' },
+       { name: 'ProductPrice', label: '商品价格', width: 200, align: 'center' },
+
+            ],
+            multiselect: true,
+            caption: "商品资料管理",
+            rownumbers: true,
+            pager: '#pager_Product',
+            rowList: 10,
+            autowidth: true
+
+        });  // jqGrid
+
+        var mydata = [
+            { ProductID: "Hejia_2012/10/23_23:57:00_001", ProductType: "手扶椅", ProductName: "SLIM【德瓦拉】左扶手贵妃椅", ProductInformation: "100%台湾制造/高质感表布植绒靠枕/原木高脚式设计/可拆式布套/免", ProductPrice: "7599" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_002", ProductType: "沙发", ProductName: "SLIM【格兰德】花纹布造型沙发", ProductInformation: "台湾制造品质有保障/三色可选好搭配/精巧造型.皮草风格/实木沙发脚高质感/三明治舒适坐垫", ProductPrice: "2499" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_003", ProductType: "折疊椅", ProductName: "SLIM轻薄折合椅-(黑) /祥业工业", ProductInformation: "获得2011年iF产品设计金奖获得2011年亚洲最具影响力设计大赏", ProductPrice: "1100" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_004", ProductType: "電腦椅", ProductName: "《Dxracer》超跑赛车椅-F01(紅)", ProductInformation: "SGS认证优良，外销日、韩、欧美/气压调整器可随意调整座椅高低/背靠阻力调节设计，因应个人体重调整/专业赛车椅骨架+高密度泡棉~安全舒适/金属烤漆五爪脚+PU轮~不易刮伤地面/高角度调角器：可调整任意舒适角度休憩/可调式扶手，有效避免肩颈疲劳僵硬", ProductPrice: "6500" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_005", ProductType: "平板架", ProductName: "《Dxracer》专用-万用平板架", ProductInformation: "SGS认证优良，外销日/韩/欧美/限装于有可调扶手Dxracer超跑赛车椅/延长臂收缩，180°自由摆放，节省空间/面板附快卡结构摆放NB，方便不易掉落/独创恒力升降转动技术，可调整NB位置", ProductPrice: "2480" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_006", ProductType: "萤幕支架", ProductName: "《Dxracer》萤幕支架", ProductInformation: "纯钢结构、结实耐用、品牌保障/独创的恒力升降，转动技术，可提供平稳的调节，可调整萤幕显示器的位置，获得最大的舒适度和工作效率/承载轻便，适用于24吋以下的萤幕显示器，承重3-9公斤/通过SGS认证机构的优良品质测试/倾斜角度135°，旋转摆动360° ，升降25cm/外销日/德​​/欧美..等20几个国家广受专业人士的欢迎/桌夹式安装，桌夹适合桌面厚度1-9cm，此厚度范围内的桌子皆适用 ", ProductPrice: "2680" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_007", ProductType: "莲蓬头", ProductName: "【Alapa】欧克沐浴龙头组", ProductInformation: "进口精致陶瓷芯/单把手控制阀/准确进止水操作", ProductPrice: "2080" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_008", ProductType: "面盆", ProductName: "《Alapa》精致釉面挂壁式面盆(不含龙头)", ProductInformation: "新颖挂壁式轻巧款/半柱型面盆易清理‧精致釉面表层处理/面盆设计水花不飞溅/单孔面盆龙头适用", ProductPrice: "1990" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_009", ProductType: "浴缸", ProductName: "【Alapa】法式古典豪华浴缸", ProductInformation: "纯台制品，优质有保障/六星级豪华浴缸带回家/外型典雅经久耐用/舒压恢复疲劳好帮手", ProductPrice: "19999" },
+            { ProductID: "Hejia_2012/10/23_23:57:00_010", ProductType: "电视", ProductName: "BenQ 电视上网精灵 家庭云 JD-130", ProductInformation: "内含红外线接收器+遥控器/HDMI 连接/Android 4.1.2系统/无线双频双核心/具多媒体播放功能，可扩充外接硬碟/搭载BenQ与Google等软体市集‧内建家庭生活板App ，两年免费5GB空间", ProductPrice: "3490" },
+        ];
+
+        for (var i = 0; i <= mydata.length; i++)
+            jQuery("#grid_ProductID").jqGrid('addRowData', i + 1, mydata[i]);
+    });
+    </script>
+    
+
+<Button>@Html.ActionLink("修改", "Exhibitors_revise", "Home")</Button>
+    <table class="table_Ad">
+           <tr>
+      <td  rowspan="6"><input type="image"src="~/Images/201382715493019600.jpg" ></td>
+   </tr>
+    <tr>
+        <td>参展商名称</td><td>Dxracer</td>
+    </tr>
+   <tr>
+      <td>参展商地址</td><td>新疆维吾尔自治区伊犁哈萨克自治州伊宁市胜利街红星街17号</td>
+   </tr>
+    <tr>
+      <td>参展商电话</td><td> 98798797899 </td>
+   </tr>
+    <tr>
+      <td>负责人</td><td>李三寶</td>
+    </tr>
+        <tr>
+      <td>博览会名称</td><td>第一届家装建材家具家电万人团购砍价会</td>
+    </tr>
+ <tr>
+     <td>简介：</td><td colspan=2><textarea readonly rows="10" cols="15" title="简介请勿写超过100字"> 如此如此这般这般如此如此这般这般如此如此这般这般</textarea></td>
+     </tr>
+        </table>
+   <Button> @Html.ActionLink("新增商品", "Product_Add", "Home") </Button><Button> @Html.ActionLink("修改商品", "Product_revise", "Home") </Button>
+<table id="grid_ProductID">
+  
+</table>
+<div id="pager_Product">
+</div>
+
+

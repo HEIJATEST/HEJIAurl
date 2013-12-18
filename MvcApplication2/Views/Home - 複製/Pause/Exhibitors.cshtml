@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "參展商管理介面";
+}
+<input type="text" name="Inquiry"><input type="button" value="查詢" />
+<script>
+    $(document).ready(function() {
+        jQuery("#grid_id").jqGrid({
+            datatype: "local",
+            height: 250,
+            colNames: ['Exhibitors_name'],
+            colModel: [
+       { name: 'Exhibitors_name', label: '參展商名稱', width: 200, align: 'center'},
+      
+               
+            ],
+            multiselect: true,
+            caption: "參展商資料管理",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+            
+        });  // jqGrid
+ 
+        var mydata = [
+            { Exhibitors_name: "你好參展商" },
+              { Exhibitors_name: "我好參展商" },
+                { Exhibitors_name: "我好參展商" },
+                  { Exhibitors_name: "我好參展商" },
+                    { Exhibitors_name: "我好參展商" },
+                      { Exhibitors_name: "我好參展商" },
+                        { Exhibitors_name: "我好參展商" },
+                          { Exhibitors_name: "我好參展商" },
+                            { Exhibitors_name: "我好參展商" },
+                              { Exhibitors_name: "我好參展商" },
+        ];
+   
+        for(var i=0;i<=mydata.length;i++)
+            jQuery("#grid_id").jqGrid('addRowData',i+1,mydata[i]);
+    });  
+    </script>
+<h2>參展商管理介面</h2>
+
+<div id="draggable">
+<table id="grid_id">
+  
+</table>
+<div id="pager">
+</div>
+</div>

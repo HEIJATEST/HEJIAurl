@@ -1,0 +1,91 @@
+﻿@{
+    
+    var viewDataen = ViewBag.en;
+    ViewBag.Title = "Exhibitors_Detail";
+}
+
+
+<script type="text/javascript">
+    var API_URL = "http://140.133.74.52:8888/API/web/get_exhibitors_detail.aspx";
+    
+    function Link(id) {
+
+        var row = id.split("=");
+        var row_ID = row[1];
+        var account = $("#grid_id").getCell(row_ID, 'product_id');
+        var url = "./Product_revise?product_id=" + account;
+
+        window.open(url);
+
+
+    }
+    $(document).ready(function () {
+        var exhibitor_name = "@viewDataen";
+        console.log(exhibitor_name);
+        jQuery("#grid_id").jqGrid({
+            datatype: "json",
+            height: 250,
+            colNames: ['商品编号', '商品类别', '商品名称', '商品资讯', '商品价格', '修改'],
+            colModel: [
+       { name: 'product_id', label: '商品编号', width: 200, align: 'center' },
+       { name: 'product_type', label: '商品类别', width: 200, align: 'center' },
+       { name: 'product_name', label: '商品名称', width: 200, align: 'center' },
+       { name: 'product_description', label: '商品资讯', width: 200, align: 'center' },
+       { name: 'product_price', label: '商品价格', width: 200, align: 'center' },
+        { name: 'product_id', id: 'product_id', edittype: 'select', formatter: 'showlink', formatoptions: { baseLinkUrl: 'javascript:', showAction: "Link('", addParam: "');" }, label: '編輯', width: 200, align: 'center' },
+            ],
+            multiselect: true,
+            caption: "商品资料管理",
+            rownumbers: true,
+            pager: '#pager',
+            rowList: 10,
+            autowidth: true
+
+        });  // jqGrid
+        console.log(exhibitor_name);
+        $.getJSON(API_URL + "?exhibitor_name=" + exhibitor_name,
+       function (data) {
+
+
+           for (i = 0; i < data.data.length; i++) {
+               $("#Exhibitors_Detail").append("<tr>" + "<td rowspan='7'><img src='../Images/Exhibition_picture/" + "20138271541114747.jpg" + "'/></td>" + "</tr>" +
+                                            "<tr>" + "<td>" + "参展商名称" + "</td>" + "<td>" + data.data[i].exhibitor_name + "</td>" + "</tr>" +
+                                            "<tr>" + "<td>" + "参展商地址" + "</td>" + "<td>" + data.data[i].exhibitor_location + "</td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "参展商电话" + "</td>" + "<td>" + data.data[i].exhibitor_phone + "</td>" + "</tr>" +
+                                             "<tr>" + "<td>" + "负责人" + "</td>" + "<td>" + data.data[i].exhibitor_owner + "</td>" + "</tr>" +
+                                             
+                                               "<tr>" + "<td>" + "简介：" + "</td>" + "<td>" + data.data[i].exhibition_endtime + "</td>" + "</tr>");
+               for (var i = 0; i <= data.data.length; i++)
+                   for (var j = 0; j <= data.data[i].products.length; j++)
+                       jQuery("#grid_id").jqGrid('addRowData', i + 1, data.data[i].products[j]);
+           }
+       })
+   .fail(
+       function (xhr, textStatus, err) {
+           $('#Exhibitors_Detail').html('Error: ' + err);
+       });
+
+
+       
+    });
+ 
+  </script>
+<a href=/Home/Exhibition_revise?exhibition_name=@viewDataen><input type="submit" value="修改"/></a>
+
+<div>
+    <table class="table_Ad">                                      
+             <tbody id="Exhibitors_Detail">
+             </tbody>
+   </table>       
+    
+</div>
+<Button> @Html.ActionLink("新增商品", "Product_Add", "Home") </Button>
+<div>
+   
+
+ <table id="grid_id"> 
+</table>
+<div id="pager">
+</div>
+
+</div>
